@@ -29,9 +29,9 @@ Servicos:
 - MySQL: localhost:3306
 - Redis: localhost:6379
 
-O container do backend executa as migrations antes de iniciar a API.
+O container do backend executa as migrations antes de iniciar a API. O Docker Compose tambem inicia o container `worker`, entao o matching engine ja fica rodando automaticamente dentro do Docker. Nesse modo, nao precisa executar `npm run worker` em outro terminal.
 
-## Rodando localmente
+## Rodando localmente sem o Docker
 
 Backend:
 
@@ -48,6 +48,15 @@ Worker em outro terminal:
 ```bash
 cd backend
 npm run worker
+```
+
+Esse comando so e necessario quando voce esta rodando o backend fora do Docker. Se voce iniciou o projeto com `docker compose up --build`, o worker ja esta ativo no container `app_worker`.
+
+Se voce rodar backend/worker direto na maquina e usar MySQL/Redis do Docker, mantenha no `backend/.env`:
+
+```env
+DB_HOST=localhost
+REDIS_HOST=localhost
 ```
 
 Frontend:
