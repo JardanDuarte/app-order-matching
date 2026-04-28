@@ -15,6 +15,11 @@ Sistema de matching de ordens para USD/BTC, seguindo a stack recomendada do desa
 - Matches globais, minhas ordens ativas com cancelamento e meu historico.
 - Atualizacao em tempo real via Socket.io com eventos publicados pelo worker via Redis Pub/Sub.
 
+## Documentação
+
+- Documentação tecnica do sistema: [docs/documentacao-tecnica.md](docs/documentacao-tecnica.md)
+- Guia de testes automatizados e manuais: [docs/testing.md](docs/testing.md)
+
 ## Como rodar com Docker
 
 ```bash
