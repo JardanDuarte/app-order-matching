@@ -29,6 +29,20 @@ Servicos:
 - MySQL: localhost:3306
 - Redis: localhost:6379
 
+## Acesso ao Adminer
+
+Depois de subir o projeto com Docker, acesse http://localhost:8080 e use:
+
+```text
+Sistema: MySQL
+Servidor: mysql
+Usuario: root
+Senha: root
+Base de dados: exchange
+```
+
+Observacao: dentro do Docker, o Adminer acessa o banco pelo nome do servico `mysql`. Se voce for conectar em uma ferramenta fora do Docker, use `localhost` como host e a porta `3306`.
+
 O container do backend executa as migrations antes de iniciar a API. O Docker Compose tambem inicia o container `worker`, entao o matching engine ja fica rodando automaticamente dentro do Docker. Nesse modo, nao precisa executar `npm run worker` em outro terminal.
 
 ## Rodando localmente sem o Docker
@@ -84,6 +98,45 @@ npm test
 ```
 
 O guia completo de testes automatizados e testes manuais das rotas esta em [docs/testing.md](docs/testing.md).
+
+## Estrutura de pastas
+
+```text
+app-order-matching/
+├── backend/
+│   ├── src/
+│   │   ├── config/          # Conexoes com MySQL e Redis
+│   │   ├── controllers/     # Entrada das requisicoes HTTP
+│   │   ├── database/        # Migrations do banco de dados
+│   │   ├── middlewares/     # Middlewares como autenticacao JWT
+│   │   ├── repositories/    # Consultas e comandos SQL
+│   │   ├── routes/          # Definicao das rotas da API
+│   │   ├── services/        # Regras de negocio
+│   │   ├── utils/           # Utilitarios compartilhados
+│   │   ├── workers/         # Motor de matching consumindo Redis
+│   │   ├── app.js           # Configuração do Express
+│   │   ├── index.js         # Inicialização da API e Socket.io
+│   │   └── worker.js        # Inicialização do worker
+│   ├── test/                # Testes automatizados do backend
+│   ├── Dockerfile
+│   ├── knexfile.js
+│   └── package.json
+├── frontend/
+│   ├── public/              # Arquivos publicos do React
+│   ├── src/
+│   │   ├── app/             # App principal, rotas e estilos globais
+│   │   ├── features/        # Modulos por dominio
+│   │   │   ├── auth/        # Login e servicos de autenticacao
+│   │   │   ├── market/      # Dashboard, order book, stats e trades
+│   │   │   └── orders/      # Formulario e lista de ordens
+│   │   ├── shared/          # Servicos compartilhados de API e socket
+│   │   └── index.js
+│   ├── Dockerfile
+│   └── package.json
+├── docs/                    # Documentacao tecnica e guia de testes
+├── docker-compose.yml       # Orquestracao local dos servicos
+└── README.md
+```
 
 ## Variaveis de ambiente
 
