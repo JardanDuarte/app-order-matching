@@ -72,6 +72,7 @@ services:
       - DB_NAME=exchange
       - REDIS_HOST=redis
       - JWT_SECRET=app-local-secret
+      - MATCHING_DELAY_MS=3000
 
   frontend:
     build: ./frontend

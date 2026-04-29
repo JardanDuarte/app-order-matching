@@ -9,6 +9,14 @@ const btc = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 8
 });
 
+function getDisplayStatus(status) {
+  if (status === 'QUEUED') {
+    return 'OPEN';
+  }
+
+  return status;
+}
+
 export default function ActiveOrders({ orders, onCancelled }) {
   async function handleCancel(orderId) {
     await cancelOrder(orderId);
@@ -40,7 +48,7 @@ export default function ActiveOrders({ orders, onCancelled }) {
                 <td>BTC {btc.format(order.remaining_amount)}</td>
                 <td>{usd.format(order.price)}</td>
                 <td>{order.type}</td>
-                <td>{order.status}</td>
+                <td>{getDisplayStatus(order.status)}</td>
                 <td className="text-end">
                   <button className="btn btn-sm btn-outline-danger" onClick={() => handleCancel(order.id)}>
                     X
